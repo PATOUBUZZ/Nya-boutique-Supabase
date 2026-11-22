@@ -1,0 +1,99 @@
+/* ============================================================================
+   promo.css — AJOUTS du site visiteur (chargé APRÈS style.css, qu'il ne modifie pas)
+   ----------------------------------------------------------------------------
+   1) Icônes TikTok / Facebook dans l'en-tête fixe
+   2) Bannière promo : carrousel infini de 3 diapositives (image d'un côté, titre + texte de l'autre)
+   3) Affichage ORDINATEUR : grille de 5 colonnes (mobile et tablette : grille 2×2 inchangée)
+   Les couleurs viennent des variables de style.css (--brand, --brand-dark, --r-lg…).
+   ============================================================================ */
+
+
+/* ───────────────────────── 1) Icônes réseaux sociaux (en-tête) ───────────────────────── */
+/* margin-left:auto → le groupe se place à DROITE, juste avant le panier ; le logo + nom restent à gauche. */
+.header-social { margin-left: auto; flex: none; display: flex; align-items: center; gap: 8px; }
+.social-btn {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; color: #fff; text-decoration: none;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.32);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform .15s, background .2s;
+}
+.social-btn svg { width: 20px; height: 20px; fill: currentColor; display: block; }
+.social-btn:active { transform: scale(.94); }
+@media (hover: hover) { .social-btn:hover { background: rgba(255,255,255,.3); } }
+/* très petits écrans (≤ 359 px) : boutons un peu plus compacts pour laisser de la place au nom de la boutique */
+@media (max-width: 359px) {
+  .header-social { gap: 6px; }
+  .social-btn { width: 36px; height: 36px; }
+  .social-btn svg { width: 18px; height: 18px; }
+}
+
+
+/* ───────────────────────── 2) Bannière promo (carrousel infini) ───────────────────────── */
+.promo-banner {
+  position: relative; margin: 0 0 12px; border-radius: var(--r-lg); overflow: hidden; color: #fff;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  box-shadow: var(--sh-2);
+}
+/* Fenêtre visible : le balayage horizontal est géré par promo.js, le défilement vertical de la page reste libre */
+.promo-viewport { overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+/* Piste : les diapositives sont alignées côte à côte et glissent avec translateX (valeur posée par promo.js) */
+.promo-track { display: flex; transition: transform .55s cubic-bezier(.65, 0, .35, 1); will-change: transform; }
+.promo-slide { flex: 0 0 100%; min-width: 0; padding: 14px 14px 30px; }   /* 30px en bas : place pour les points */
+
+/* Diapositive = 2 colonnes : [ image | titre + texte ] */
+.promo-inner { display: grid; grid-template-columns: minmax(0, 38%) minmax(0, 1fr); align-items: center; gap: 14px; min-height: 124px; }
+.promo-slide.no-img .promo-inner,
+.promo-slide.no-text .promo-inner { grid-template-columns: minmax(0, 1fr); }   /* image seule ou texte seul : pleine largeur */
+.promo-slide.no-text .promo-img { max-width: 420px; margin: 0 auto; width: 100%; }
+
+.promo-img {
+  aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; background: #fff;
+  border: 3px solid rgba(255,255,255,.92); box-shadow: 0 8px 18px rgba(0,0,0,.28);
+}
+.promo-img img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+
+.promo-title { margin: 0 0 6px; font-size: 1.05rem; font-weight: 800; line-height: 1.2; letter-spacing: .1px; overflow-wrap: anywhere; }
+.promo-desc  { margin: 0; font-size: .82rem; line-height: 1.45; opacity: .93; overflow-wrap: anywhere; white-space: pre-line; }
+
+/* Flèches (affichées à partir de 700 px ; sur téléphone : balayage + points) */
+.promo-nav {
+  display: none; position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); color: #fff;
+  background: rgba(255,255,255,.18); align-items: center; justify-content: center; transition: background .2s, transform .15s;
+}
+.promo-prev { left: 12px; } .promo-next { right: 12px; }
+@media (hover: hover) { .promo-nav:hover { background: rgba(255,255,255,.34); } }
+.promo-nav:active { transform: translateY(-50%) scale(.92); }
+
+/* Points de navigation : zone de toucher 22×22, point visible 8×8 (le point actif s'allonge) */
+.promo-dots { position: absolute; left: 0; right: 0; bottom: 4px; z-index: 2; display: flex; justify-content: center; gap: 2px; }
+.promo-dot { width: 22px; height: 22px; padding: 0; border: 0; background: transparent; display: inline-flex; align-items: center; justify-content: center; }
+.promo-dot::after { content: ''; width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.5); transition: width .25s, background .25s; }
+.promo-dot[aria-current="true"]::after { width: 22px; background: var(--amber); }
+
+/* Focus clavier bien visible sur fond coloré */
+.promo-banner :where(button):focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+@media (min-width: 700px) {
+  .promo-nav { display: inline-flex; }
+  .promo-slide { padding: 22px 70px 36px; }
+  .promo-inner { grid-template-columns: 220px minmax(0, 1fr); gap: 30px; min-height: 200px; max-width: 920px; margin: 0 auto; }
+  .promo-slide.no-img .promo-inner, .promo-slide.no-text .promo-inner { grid-template-columns: minmax(0, 1fr); }
+  .promo-title { font-size: 1.6rem; margin-bottom: 10px; }
+  .promo-desc  { font-size: 1rem; line-height: 1.55; }
+  .promo-dots { bottom: 8px; }
+}
+
+
+/* ───────────────────────── 3) ORDINATEUR : grille de 5 colonnes ─────────────────────────
+   À partir de 1024 px de large. En dessous (téléphone, tablette) : la grille 2×2 d'origine est conservée.
+   On ne fait que SURCHARGER (même sélecteurs, chargés après style.css) : style.css reste intact.            */
+@media (min-width: 1024px) {
+  main { max-width: 1240px; }                                              /* page plus large pour loger 5 colonnes */
+  .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }   /* 5 produits par ligne */
+  .grid .skeleton:nth-child(6) { display: none; }                          /* 5 squelettes de chargement = 1 ligne complète */
+  /* L'en-tête s'aligne sur les bords du contenu (qui fait désormais 1240 px de large) */
+  .site-header { padding: 0 max(14px, calc((100vw - 1240px) / 2 + 20px)); }
+  /* La fiche produit et le pied de page gardent leur largeur de lecture d'origine (760 px), centrés */
+  #detail-view, .shop-info { max-width: 760px; margin-left: auto; margin-right: auto; }
+}

@@ -1,0 +1,9 @@
+DOSSIER DU LOGO DU VENDEUR
+--------------------------
+1. Déposez ici l'image du logo (carrée, 256 x 256 px, PNG / WebP / SVG, moins de 100 Ko).
+   Exemple : logo/logo.webp
+2. Dans config.js, écrivez son chemin :   logo: 'logo/logo.webp',
+3. Enregistrez (commit) : le logo apparaît sur le site, dans l'espace vendeur et comme icône d'onglet.
+
+Astuce : si vous remplacez l'image en gardant le même nom et que l'ancienne reste affichée, changez
+le réglage en  logo: 'logo/logo.webp?v=2'  (ou donnez un nouveau nom au fichier).

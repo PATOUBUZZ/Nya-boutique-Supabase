@@ -1,0 +1,18 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=()
+  X-Frame-Options: SAMEORIGIN
+
+/vendeur.html
+  X-Frame-Options: DENY
+  Cache-Control: no-store
+
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /
+
+/manifest.json
+  Content-Type: application/manifest+json
+  Cache-Control: no-cache

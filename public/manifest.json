@@ -1,0 +1,20 @@
+{
+  "id": "./vendeur.html",
+  "name": "Espace vendeur",
+  "short_name": "Vendeur",
+  "description": "Gérez votre boutique : produits, photos, messages défilants et promotions.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./vendeur.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1F4D",
+  "theme_color": "#0B1F4D",
+  "categories": ["business", "shopping"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

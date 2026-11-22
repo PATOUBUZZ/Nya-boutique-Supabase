@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Boutique</title>
+  <meta name="description" content="Découvrez notre boutique et commandez directement sur WhatsApp. Paiement à la livraison.">
+  <meta name="theme-color" content="#2563eb">
+  <!-- ═════ OPEN GRAPH : aperçu affiché quand le lien est partagé (WhatsApp, Facebook, Telegram, SMS…) ═════
+       ► À CONFIGURER : remplacez VOTRE-DOMAINE.com par l'adresse de votre site et déposez votre image dans le dossier public/.
+       ► Image : 1200 × 630 px (format 1,91:1), JPEG ou PNG, moins de 300 Ko, adresse COMPLÈTE en https://.
+       ► Les robots de partage ne lancent pas le JavaScript : le titre et la description ci-dessous sont donc ceux de l'aperçu.
+         Écrivez-y le vrai nom de la boutique (app.js les met à jour seulement pour les visiteurs du site).
+       ► Pas de balise og:url : chaque lien de produit (?p=…) garde ainsi son propre aperçu.
+       ► Après un changement, forcez l'actualisation de l'aperçu : developers.facebook.com/tools/debug (WhatsApp utilise le même cache). -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Boutique">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Boutique">
+  <meta property="og:description" content="Commandez directement sur WhatsApp. Paiement à la livraison.">
+  <meta property="og:image" content="https://VOTRE-DOMAINE.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aperçu de la boutique">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://VOTRE-DOMAINE.com/og-image.jpg">
+  <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Cpath d='M18 46V18h6l16 21V18h6v28h-6L24 25v21z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <!-- AJOUT : bannière promo, icônes TikTok/Facebook, grille 5 colonnes sur ordinateur (n'altère pas style.css) -->
+  <link rel="stylesheet" href="promo.css">
+</head>
+<body>
+
+  <!-- ═════ ZONE FIXE : bande défilante (tout en haut) + en-tête (logo, nom, panier) ═════ -->
+  <div class="top-fixed" id="top-fixed">
+    <!-- Bande défilante infinie : remplie par app.js à partir de la table « annonces » (masquée s'il n'y a aucun message) -->
+    <div class="ticker" id="ticker" hidden aria-label="Annonces de la boutique">
+      <div class="ticker-track" id="ticker-track"></div>
+    </div>
+
+    <header class="site-header">
+      <!-- AJOUT : image de fond de l'en-tête (réglée depuis vendeur.html ; masquée s'il n'y en a pas) -->
+      <div class="header-bg" id="header-bg" aria-hidden="true" hidden></div>
+      <a class="brand" id="brand-link" href="./" aria-label="Retour à tous les produits">
+        <span class="brand-logo" id="brand-logo" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name" id="brand-name">Boutique</span>
+          <!-- AJOUT : petite description sous le nom (réglée depuis vendeur.html ; masquée si vide) -->
+          <span class="brand-tagline" id="brand-tagline" hidden></span>
+        </span>
+      </a>
+      <!-- AJOUT : icônes TikTok / Facebook (remplies par promo.js ; masquées si le vendeur n'a renseigné aucun lien) -->
+      <div class="header-social" id="header-social" hidden></div>
+      <button class="cart-btn" id="cart-btn" type="button" aria-label="Ouvrir le panier">
+        <span id="cart-icon"></span>
+        <span class="cart-badge" id="cart-count" hidden>0</span>
+      </button>
+    </header>
+  </div>
+
+  <main id="main">
+
+    <!-- ═════ VUE 1 : GRILLE 2×2 de tous les produits ═════ -->
+    <section id="grid-view" aria-label="Produits">
+      <!-- AJOUT : bannière promo (carrousel infini de 3 diapositives), construite par promo.js ; masquée si désactivée par le vendeur -->
+      <section class="promo-banner" id="promo-banner" aria-label="Promotions" hidden></section>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div id="sentinel" aria-hidden="true"></div>
+      <div class="state-msg" id="state-msg" hidden></div>
+    </section>
+
+    <!-- ═════ VUE 2 : DÉTAIL d'un produit (galerie 4 photos + infos + « Plus d'informations ») ═════ -->
+    <section id="detail-view" hidden aria-label="Détail du produit"></section>
+
+    <!-- ═════ PIED DE PAGE : informations réelles de la boutique (remplies depuis la table « boutique ») ═════ -->
+    <footer class="shop-info" id="shop-info" hidden></footer>
+  </main>
+
+  <!-- Bouton flottant visible uniquement en vue détaillée : retour à la grille 2×2 -->
+  <button class="all-btn" id="all-btn" type="button" hidden>
+    <span id="all-icon"></span><span>Voir tous les produits</span>
+  </button>
+
+  <!-- ═════ FENÊTRE PANIER / COMMANDE ═════ -->
+  <div class="modal" id="cart-modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="modal-head">
+        <h2 id="cart-title">Ma commande</h2>
+        <button class="icon-btn" type="button" id="cart-close" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cart-empty" class="cart-empty" hidden>Votre panier est vide.</div>
+        <ul class="cart-list" id="cart-list"></ul>
+        <div class="cart-total" id="cart-total-row" hidden><span>Total</span><strong id="cart-total">0</strong></div>
+
+        <form id="order-form" class="order-form" hidden novalidate>
+          <p class="order-note">Paiement à la livraison. Vérifiez votre produit avant de payer.</p>
+          <label for="o-nom">Votre nom *</label>
+          <input id="o-nom" name="nom" type="text" autocomplete="name" maxlength="80" required>
+          <label for="o-tel">Votre téléphone</label>
+          <input id="o-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="Ex : 97 00 00 00">
+          <label for="o-adresse">Quartier / adresse de livraison *</label>
+          <input id="o-adresse" name="adresse" type="text" autocomplete="street-address" maxlength="160" required>
+          <div class="geo-row">
+            <button type="button" class="btn-geo" id="geo-btn"><span id="geo-icon"></span> <span id="geo-label">Utiliser ma position (GPS)</span></button>
+            <p class="geo-status" id="geo-status" role="status" aria-live="polite" hidden></p>
+          </div>
+          <label for="o-note">Précision (couleur, taille…)</label>
+          <input id="o-note" name="note" type="text" maxlength="160">
+          <p class="form-error" id="order-error" role="alert" hidden></p>
+          <button class="btn btn-wa" type="submit" id="order-submit"><span id="wa-icon"></span> Confirmer sur WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript><p style="padding:90px 20px;text-align:center">Activez JavaScript pour voir la boutique.</p></noscript>
+
+  <script src="config.js"></script>
+  <script src="shared.js"></script>
+  <!-- AJOUT : protection du contenu (sélection des textes, appui long, téléchargement des images) — réglable dans config.js -->
+  <script src="protection.js"></script>
+  <script src="app.js"></script>
+  <script src="promo.js"></script>
+</body>
+</html>

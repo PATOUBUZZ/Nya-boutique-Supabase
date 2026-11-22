@@ -1,0 +1,38 @@
+/* ============================================================================
+   vendeur-promo.css — AJOUTS de l'espace vendeur (chargé APRÈS vendeur.css, qu'il ne modifie pas)
+   Styles des deux nouvelles sections de vendeur.html : « Bannière promo » et « Réseaux sociaux ».
+   Réutilise les classes existantes (.field, .field-label, .btn-main, .prod-act, .form-error…).
+   ============================================================================ */
+
+/* Interrupteur ON / OFF (case à cocher stylée, sans dépendance à Tailwind) */
+.nb-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; cursor: pointer; }
+.nb-switch {
+  -webkit-appearance: none; appearance: none; position: relative; flex: none; width: 54px; height: 30px; margin: 0;
+  border: 0; border-radius: 999px; background: #CBD5E1; cursor: pointer; transition: background .2s;
+}
+.nb-switch::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(15,23,42,.35); transition: transform .2s;
+}
+.nb-switch:checked { background: #10B981; }
+.nb-switch:checked::after { transform: translateX(24px); }
+.nb-switch:focus-visible { outline: 3px solid rgba(249,115,22,.7); outline-offset: 2px; }
+
+/* Carte d'édition d'une diapositive */
+.promo-ed { border: 1px solid #E6EAF2; border-radius: 16px; padding: 12px; background: #F8FAFC; }
+.promo-ed-img {
+  flex: none; width: 96px; height: 96px; border-radius: 12px; overflow: hidden; background: #F1F5F9;
+  border: 2px dashed #CBD5E1; display: flex; align-items: center; justify-content: center; color: #94A3B8; font-size: 1.5rem;
+}
+.promo-ed-img.filled { border: 2px solid #E2E8F0; background: #fff; }
+.promo-ed-img img { width: 100%; height: 100%; object-fit: cover; }
+.promo-ed .prod-act { min-height: 38px; padding: 0 12px; }
+
+/* Bloc d'aide « base de données non à jour » (le script SQL 4 n'a pas encore été exécuté) */
+.promo-setup { margin-bottom: 12px; }
+
+/* ───────── En-tête de la boutique (vendeur-header.js) : aperçu proportionné comme sur le site (5:2) ───────── */
+.h-zone { position: relative; width: 100%; aspect-ratio: 4 / 1; border-radius: 14px; overflow: hidden; background: #f1f5f9; border: 2px dashed #cbd5e1;
+  display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 1.8rem; }
+.h-zone.filled { border-style: solid; border-color: #e2e8f0; }
+.h-zone img { width: 100%; height: 100%; object-fit: cover; display: block; }
