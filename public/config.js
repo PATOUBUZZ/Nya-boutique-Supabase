@@ -33,7 +33,7 @@ window.NB_CONFIG = {
         Le logo apparaît sur le site, dans l'espace vendeur et comme icône d'onglet.
         Vous remplacez l'image sans changer son nom et l'ancienne s'affiche encore ? Ajoutez un numéro : 'logo/logo.webp?v=2'
         '' (vide) = pas de fichier : l'ancien réglage de la base de données (logo_url) est alors utilisé s'il existe. */
-  logo: '',
+  logo: 'logo/logo.jpg',
 
   /* ── 2 ter) PROTECTION DU CONTENU (site visiteur et espace vendeur) ─────────────────────────────────────────
         true = activé (recommandé) · false = désactivé. Les champs de saisie (formulaires) restent normaux.
