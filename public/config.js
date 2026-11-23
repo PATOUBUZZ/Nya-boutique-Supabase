@@ -89,7 +89,7 @@ window.NB_CONFIG = {
           theme: { couleurNom: '#0f172a', couleurDescription: '#334155', couleurIcones: '#0f172a', ombreTexteEntete: false }   */
   theme: {
     couleurNom: '',
-    couleurDescription: '',
+    couleurDescription: '#FFA500',
     couleurIcones: '',
     couleurFondEntete: '',
     tailleNom: '',
