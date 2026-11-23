@@ -88,8 +88,8 @@ window.NB_CONFIG = {
           enteteImage: { …, voile: 0 },
           theme: { couleurNom: '#0f172a', couleurDescription: '#334155', couleurIcones: '#0f172a', ombreTexteEntete: false }   */
   theme: {
-    couleurNom: '',
-    couleurDescription: '#FFA500',
+    couleurNom: '#ee8b29',
+    couleurDescription: '',
     couleurIcones: '',
     couleurFondEntete: '',
     tailleNom: '',
